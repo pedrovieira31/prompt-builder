@@ -247,6 +247,7 @@ Now i'm going to present you some questions, and I need you to be simple with ye
     let r = '';
 
     r += 'Instructions:\n\n' + instructions.value + '\n\n';
+    r += 'I NEED YOU TO RESPECT THE INPUT NAMES WHEN SCORING THEN, THEY NEED TO PERSIST EXATLY AS THE HAVE BEEN INPUTED. THE SCORING OUTPUT NEEDS TO BE ON THIS FORMAT: input_name: score\n';
     r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
     r += 'Prompt:\n\n"' + promptInput.value + '"\n\n';
     r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
@@ -263,7 +264,7 @@ Now i'm going to present you some questions, and I need you to be simple with ye
     });
 
     r += '\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
-    r += 'Now this ones are major errors, i need you to score the negative 0 to 100, they don\'t need to sum to 100, the score indicates how this errors impacted by the prompt input reflects the output:\n';
+    r += 'Now this ones are major errors, I NEED YOU TO SCORE WITH NEGATIVE NUMBERS 0 to 100, they don\'t need to sum to 100, the score indicates how this errors impacted by the prompt input reflects the output:\n';
 
     document.querySelectorAll('#errors .input-row').forEach(row => {
       const [n,v] = row.querySelectorAll('input');
