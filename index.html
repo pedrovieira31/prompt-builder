@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Dynamic Prompt Builder</title>
@@ -36,7 +37,8 @@
       padding: 24px;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
       border-bottom: 1px solid var(--border);
       padding-bottom: 6px;
     }
@@ -63,7 +65,8 @@
       margin-bottom: 8px;
     }
 
-    input, textarea {
+    input,
+    textarea {
       background: var(--input-bg);
       color: var(--text);
       border: 1px solid var(--border);
@@ -124,177 +127,172 @@
 
 <body>
 
-<button class="theme-toggle secondary" onclick="toggleTheme()">🌙</button>
+  <button class="theme-toggle secondary" onclick="toggleTheme()">🌙</button>
 
-<h1>Dynamic Prompt Builder</h1>
+  <h1>Dynamic Prompt Builder</h1>
 
-<h2>Instructions</h2>
-<div class="block">
-  <textarea id="instructions" placeholder="Instructions-input"></textarea>
-</div>
+  <h2>Instructions</h2>
+  <div class="block">
+    <textarea id="instructions" placeholder="Instructions-input"></textarea>
+  </div>
 
-<h2>Prompt</h2>
-<div class="block">
-  <textarea id="promptInput" placeholder="Prompt-input"></textarea>
-</div>
+  <h2>Prompt</h2>
+  <div class="block">
+    <textarea id="promptInput" placeholder="Prompt-input"></textarea>
+  </div>
 
-<h2>Evaluation Questions</h2>
-<div class="block static-text" id="evaluationQuestions">
-Now i'm going to present you some questions, and I need you to be simple with yes and no questions:
--P1. Does the prompt present a sufficiently complex task, clearly articulate the problem with adequate context, and correctly match the assigned programming language and issue type from task-level inputs? (YES: Requires multi-step technical reasoning; problem is clearly defined with sufficient context; complexity warrants detailed specification work. NO: Trivial task requiring minimal specification; problem statement is ambiguous or lacks necessary context; too broad to specify comprehensively.)
--P2. Does the prompt correctly match the assigned programming language and issue type from task-level inputs, with clear evaluability criteria? (YES: Programming language in prompt matches task assignment; issue type (bug fix/feature/refactoring/upgrade/security) is correctly identified; success criteria are evident. NO: Language mismatch between prompt and task inputs; issue type misclassified or unclear; impossible to determine what a good specification looks like.)
+  <h2>Scoring Topics</h2>
 
--C1. Are rubric criteria specific enough to evaluate consistently, without being so rigid they reject valid approaches, AND are criteria appropriately scoped and self-contained? (YES: Criteria are consistently calibrated—measurable thresholds exist without penalizing valid alternatives; each criterion is self-contained and atomic with consistent granularity. NO: Criteria too vague OR too rigid; criteria require decomposition; significant granularity variance across criteria; criteria not self-contained.)
--C2. Does the rubric cover all explicit and implicit prompt requirements, assess understanding of the core problem, technical context, and system limits, and correctly identify and penalize critical errors with calibrated negative weights? (YES: All prompt requirements have corresponding criteria; comprehension of problem context is evaluable. NO: Any explicit requirement lacks coverage; no criteria for evaluating problem understanding.)
--C3. Does the rubric demonstrate domain expertise specific to the programming language AND tailor criteria to the specific issue type (bug fix/feature/refactoring/upgrade/security)? (YES: Criteria reflect language-specific expertise AND issue-type-specific evaluation focus. NO: Generic criteria any non-expert could write; issue type not reflected in criteria focus.)
--C4. Can the rubric evaluate technical correctness, appropriate scope boundaries, AND whether specifications are feasible with clear acceptance criteria? (YES: Rubric can assess technical accuracy, respects scope boundaries, and evaluates feasibility. NO: Penalizes out-of-scope items; cannot evaluate technical correctness; no feasibility assessment possible.)
-
--E1. Do the evaluation instructions define a domain expert identity with relevant expertise for this specific programming language and issue type? (Must Include: * Expert role relevant to language/domain * Relevant technical background * Specific evaluation task defined)
--E2. Are evaluation rules domain-specific, concrete, and binding with clear thresholds? (PASS Examples: * "For API specifications: Verify all endpoints include error response schemas" * "For database migrations: Check for rollback procedures and data preservation" * "For security fixes: Verify threat model addresses OWASP Top 10 relevant categories" FAIL Examples: * "Verify the specification is complete" (generic) * "Use good judgment on technical accuracy" (non-binding) * "Check for best practices" (vague) Automatic FAIL: No language-specific or issue-type-specific evaluation guidance.)
-</div>
-
-<h2>Scoring Topics</h2>
-
-<div id="topics">
-  <div class="block" data-topic="Comprehension">
-    <div class="topic-header">
-      <span>-Comprehension:</span>
-      <button class="add-btn" onclick="addInput(this)">+</button>
+  <div id="topics">
+    <div class="block" data-topic="Comprehension">
+      <div class="topic-header">
+        <span>-Comprehension:</span>
+        <button class="add-btn" onclick="addInput(this)">+</button>
+      </div>
+      <div class="topic-inputs"></div>
     </div>
-    <div class="topic-inputs"></div>
-  </div>
 
-  <div class="block" data-topic="Accuracy">
-    <div class="topic-header">
-      <span>-Accuracy:</span>
-      <button class="add-btn" onclick="addInput(this)">+</button>
+    <div class="block" data-topic="Accuracy">
+      <div class="topic-header">
+        <span>-Accuracy:</span>
+        <button class="add-btn" onclick="addInput(this)">+</button>
+      </div>
+      <div class="topic-inputs"></div>
     </div>
-    <div class="topic-inputs"></div>
-  </div>
 
-  <div class="block" data-topic="Precision">
-    <div class="topic-header">
-      <span>-Precision:</span>
-      <button class="add-btn" onclick="addInput(this)">+</button>
+    <div class="block" data-topic="Precision">
+      <div class="topic-header">
+        <span>-Precision:</span>
+        <button class="add-btn" onclick="addInput(this)">+</button>
+      </div>
+      <div class="topic-inputs"></div>
     </div>
-    <div class="topic-inputs"></div>
-  </div>
 
-  <div class="block" data-topic="Implementability">
-    <div class="topic-header">
-      <span>-Implementability:</span>
-      <button class="add-btn" onclick="addInput(this)">+</button>
+    <div class="block" data-topic="Implementability">
+      <div class="topic-header">
+        <span>-Implementability:</span>
+        <button class="add-btn" onclick="addInput(this)">+</button>
+      </div>
+      <div class="topic-inputs"></div>
     </div>
-    <div class="topic-inputs"></div>
-  </div>
 
-  <div class="block" data-topic="Overall Quality">
-    <div class="topic-header">
-      <span>-Overall Quality:</span>
-      <button class="add-btn" onclick="addInput(this)">+</button>
+    <div class="block" data-topic="Overall Quality">
+      <div class="topic-header">
+        <span>-Overall Quality:</span>
+        <button class="add-btn" onclick="addInput(this)">+</button>
+      </div>
+      <div class="topic-inputs"></div>
     </div>
-    <div class="topic-inputs"></div>
   </div>
-</div>
 
-<h2>Major Errors</h2>
+  <h2>Major Errors</h2>
 
-<div class="block">
-  <div class="topic-header">
-    <span>Errors</span>
-    <button class="add-btn" onclick="addError()">+</button>
+  <div class="block">
+    <div class="topic-header">
+      <span>Errors</span>
+      <button class="add-btn" onclick="addError()">+</button>
+    </div>
+    <div id="errors"></div>
   </div>
-  <div id="errors"></div>
-</div>
 
-<div style="margin-top:24px;">
-  <button onclick="generatePrompt()">🚀 Generate Prompt</button>
-  <button class="secondary" onclick="copyPrompt()">📋 Copy</button>
-</div>
+  <div style="margin-top:24px;">
+    <button onclick="generatePrompt()">🚀 Generate Prompt</button>
+    <button class="secondary" onclick="copyPrompt()">📋 Copy</button>
+  </div>
 
-<div id="output" class="generated"></div>
+  <div id="output" class="generated"></div>
 
-<script>
-  function createInputRow() {
-    const row = document.createElement('div');
-    row.className = 'input-row';
+  <script>
+    function createInputRow() {
+      const row = document.createElement('div');
+      row.className = 'input-row';
 
-    const name = document.createElement('input');
-    name.placeholder = 'input-name';
+      const name = document.createElement('input');
+      name.placeholder = 'input-name';
 
-    const value = document.createElement('input');
-    value.placeholder = 'value';
+      const value = document.createElement('input');
+      value.placeholder = 'value';
 
-    const remove = document.createElement('button');
-    remove.className = 'danger';
-    remove.textContent = '✖';
-    remove.onclick = () => row.remove();
+      const remove = document.createElement('button');
+      remove.className = 'danger';
+      remove.textContent = '✖';
+      remove.onclick = () => row.remove();
 
-    row.append(name, value, remove);
-    return row;
-  }
+      row.append(name, value, remove);
+      return row;
+    }
 
-  function addInput(btn) {
-    btn.closest('.block').querySelector('.topic-inputs')
-      .appendChild(createInputRow());
-  }
+    function addInput(btn) {
+      btn.closest('.block').querySelector('.topic-inputs')
+        .appendChild(createInputRow());
+    }
 
-  function addError() {
-    document.getElementById('errors').appendChild(createInputRow());
-  }
+    function addError() {
+      document.getElementById('errors').appendChild(createInputRow());
+    }
 
-  function generatePrompt() {
-    let r = '';
+    function generatePrompt() {
+      let r = '';
 
-    r += 'Instructions:\n\n' + instructions.value + '\n\n';
-    r += 'I NEED YOU TO RESPECT THE INPUT NAMES WHEN SCORING THEN, THEY NEED TO PERSIST EXATLY AS THE HAVE BEEN INPUTED. THE SCORING OUTPUT NEEDS TO BE ON THIS FORMAT: input_name: score\n';
-    r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
-    r += 'Prompt:\n\n"' + promptInput.value + '"\n\n';
-    r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
-    r += evaluationQuestions.textContent + '\n\n';
-    r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
-    r += "I'm going to list all of the question below in topics, score then 0 to 100 and the sum of all of then needs to be 100:\n\n";
+      r += 'Instructions:\n\n' + instructions.value + '\n\n';
+      r += 'I NEED YOU TO RESPECT THE INPUT NAMES WHEN SCORING THEN, THEY NEED TO PERSIST EXACTLY AS THEY HAVE BEEN INPUT. THE SCORING OUTPUT NEEDS TO BE IN THIS FORMAT: input_name: score\n';
+      r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
+      r += 'Prompt:\n\n"' + promptInput.value + '"\n\n';
+      r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
+      r += 'Evaluation Questions\n\n';
+      r += 'Now I\'m going to present you some questions, and I need you to be simple with yes and no questions:\n\n';
+      r += '-P1. Does the prompt present a sufficiently complex task, clearly articulate the problem with adequate context, and correctly match the assigned programming language and issue type from task-level inputs? (YES: Requires multi-step technical reasoning; problem is clearly defined with sufficient context; complexity warrants detailed specification work. NO: Trivial task requiring minimal specification; problem statement is ambiguous or lacks necessary context; too broad to specify comprehensively.)\n\n';
+      r += '-P2. Does the prompt correctly match the assigned programming language and issue type from task-level inputs, with clear evaluability criteria? (YES: Programming language in prompt matches task assignment; issue type (bug fix/feature/refactoring/upgrade/security) is correctly identified; success criteria are evident. NO: Language mismatch between prompt and task inputs; issue type misclassified or unclear; impossible to determine what a good specification looks like.)\n\n';
+      r += '-C1. Are rubric criteria specific enough to evaluate consistently, without being so rigid they reject valid approaches, AND are criteria appropriately scoped and self-contained? (YES: Criteria are consistently calibrated—measurable thresholds exist without penalizing valid alternatives; each criterion is self-contained and atomic with consistent granularity. NO: Criteria too vague OR too rigid; criteria require decomposition; significant granularity variance across criteria; criteria not self-contained.)\n\n';
+      r += '-C2. Does the rubric cover all explicit and implicit prompt requirements, assess understanding of the core problem, technical context, and system limits, and correctly identify and penalize critical errors with calibrated negative weights? (YES: All prompt requirements have corresponding criteria; comprehension of problem context is evaluable. NO: Any explicit requirement lacks coverage; no criteria for evaluating problem understanding.)\n\n';
+      r += '-C3. Does the rubric demonstrate domain expertise specific to the programming language AND tailor criteria to the specific issue type (bug fix/feature/refactoring/upgrade/security)? (YES: Criteria reflect language-specific expertise AND issue-type-specific evaluation focus. NO: Generic criteria any non-expert could write; issue type not reflected in criteria focus.)\n\n';
+      r += '-C4. Can the rubric evaluate technical correctness, appropriate scope boundaries, AND whether specifications are feasible with clear acceptance criteria? (YES: Rubric can assess technical accuracy, respects scope boundaries, and evaluates feasibility. NO: Penalizes out-of-scope items; cannot evaluate technical correctness; no feasibility assessment possible.)\n\n';
+      r += '-E1. Do the evaluation instructions define a domain expert identity with relevant expertise for this specific programming language and issue type? (Must Include: * Expert role relevant to language/domain * Relevant technical background * Specific evaluation task defined)\n\n';
+      r += '-E2. Are evaluation rules domain-specific, concrete, and binding with clear thresholds? (PASS Examples: * "For API specifications: Verify all endpoints include error response schemas" * "For database migrations: Check for rollback procedures and data preservation" * "For security fixes: Verify threat model addresses OWASP Top 10 relevant categories" FAIL Examples: * "Verify the specification is complete" (generic) * "Use good judgment on technical accuracy" (non-binding) * "Check for best practices" (vague) Automatic FAIL: No language-specific or issue-type-specific evaluation guidance.)\n\n';
+      r += '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
+      r += 'I\'m going to list all of the questions below in topics, I need the scoring to be separated by topics(it\'s name in bold and bigger font) and also by each parameter, score then 0 to 100, and the sum of all of them needs to be 100:\n\n';
 
-    document.querySelectorAll('#topics .block').forEach(b => {
-      r += `-${b.dataset.topic}:\n`;
-      b.querySelectorAll('.input-row').forEach(row => {
-        const [n,v] = row.querySelectorAll('input');
-        if(n.value && v.value) r += `\t${n.value}: ${v.value}\n`;
+      document.querySelectorAll('#topics .block').forEach(b => {
+        r += `-${b.dataset.topic}:\n`;
+        b.querySelectorAll('.input-row').forEach(row => {
+          const [n, v] = row.querySelectorAll('input');
+          if (n.value && v.value) r += `\t${n.value}: ${v.value}\n`;
+        });
       });
-    });
 
-    r += '\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
-    r += 'Now this ones are major errors, I NEED YOU TO SCORE WITH NEGATIVE NUMBERS 0 to 100, they don\'t need to sum to 100, the score indicates how this errors impacted by the prompt input reflects the output:\n';
+      r += '\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n';
+      r += 'Now this ones are major errors (it\'s name on bold and bigger font), I NEED YOU TO SCORE WITH NEGATIVE NUMBERS -1 to -100, they don\'t need to sum to 100, the score indicates how this errors impacted by the prompt input reflects the output (there\'s no 0 score here, be realistic with this scoring):\n';
 
-    document.querySelectorAll('#errors .input-row').forEach(row => {
-      const [n,v] = row.querySelectorAll('input');
-      if(n.value && v.value) r += `${n.value}: ${v.value}\n`;
-    });
+      document.querySelectorAll('#errors .input-row').forEach(row => {
+        const [n, v] = row.querySelectorAll('input');
+        if (n.value && v.value) r += `${n.value}: ${v.value}\n`;
+      });
 
-    output.textContent = r;
-  }
+      output.textContent = r;
+    }
 
-  function copyPrompt() {
-    navigator.clipboard.writeText(output.textContent);
-    alert('Prompt copied!');
-  }
+    function copyPrompt() {
+      navigator.clipboard.writeText(output.textContent);
+      alert('Prompt copied!');
+    }
 
-  function toggleTheme() {
-    const t = document.documentElement.getAttribute('data-theme') || 'dark';
-    const n = t === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', n);
-    localStorage.setItem('theme', n);
-  }
+    function toggleTheme() {
+      const t = document.documentElement.getAttribute('data-theme') || 'dark';
+      const n = t === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', n);
+      localStorage.setItem('theme', n);
+    }
 
-  document.documentElement.setAttribute(
-    'data-theme',
-    localStorage.getItem('theme') || 'dark'
-  );
+    document.documentElement.setAttribute(
+      'data-theme',
+      localStorage.getItem('theme') || 'dark'
+    );
 
-  document.querySelectorAll('#topics .topic-inputs')
-    .forEach(c => c.appendChild(createInputRow()));
-  addError();
-</script>
+    document.querySelectorAll('#topics .topic-inputs')
+      .forEach(c => c.appendChild(createInputRow()));
+    addError();
+  </script>
 
 </body>
+
 </html>
